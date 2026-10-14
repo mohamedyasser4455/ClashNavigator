@@ -1,0 +1,34 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClashNavigator", "ClashNavigator\ClashNavigator.csproj", "{33306034-39FA-485E-B6A8-090ADF8F6889}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		R22|Any CPU = R22|Any CPU
+		R23|Any CPU = R23|Any CPU
+		R24|Any CPU = R24|Any CPU
+		R25|Any CPU = R25|Any CPU
+		R26|Any CPU = R26|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R22|Any CPU.ActiveCfg = R22|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R22|Any CPU.Build.0 = R22|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R23|Any CPU.ActiveCfg = R23|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R23|Any CPU.Build.0 = R23|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R24|Any CPU.ActiveCfg = R24|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R24|Any CPU.Build.0 = R24|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R25|Any CPU.ActiveCfg = R25|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R25|Any CPU.Build.0 = R25|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R26|Any CPU.ActiveCfg = R26|Any CPU
+		{33306034-39FA-485E-B6A8-090ADF8F6889}.R26|Any CPU.Build.0 = R26|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BA12475-BB52-430D-BD7D-AABAA7D0E994}
+	EndGlobalSection
+EndGlobal

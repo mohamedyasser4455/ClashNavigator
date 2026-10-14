@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Clash Navigator</Name>
+    <!-- Relative path: Revit resolves it against the folder this manifest sits in, so the same
+         file works for the installer and for the post-build copy during development. -->
+    <Assembly>ClashNavigator\ClashNavigator.dll</Assembly>
+    <AddInId>20C6F72A-6BB4-41D9-895C-6D58E17A3DFA</AddInId>
+    <FullClassName>ClashNavigator.App.RibbonApplication</FullClassName>
+    <VendorId>KTBD</VendorId>
+    <VendorDescription>Mohamed Yasser - KAITECH BIM Application Development R11</VendorDescription>
+  </AddIn>
+</RevitAddIns>

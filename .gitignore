@@ -1,0 +1,34 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio
+.vs/
+*.VC.db
+*.opendb
+
+# NuGet
+packages/
+*.nupkg
+
+# Inno Setup output
+Installer/Output/
+
+# Real project data - never commit models or clash reports
+*.nwd
+*.nwf
+*.nwc
+*.rvt
+*.rfa
+*.status.xml
+Test/
+Trial/
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

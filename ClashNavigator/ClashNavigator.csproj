@@ -1,0 +1,116 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    One project, five builds.
+
+    Revit changed its runtime at version 2025:
+        Revit 2022 / 2023 / 2024  ->  .NET Framework 4.8
+        Revit 2025 / 2026         ->  .NET 8
+
+    So a single DLL can never cover 2022 to 2026. Instead the same source code is
+    compiled five times (R22 .. R26), each build referencing that year's Revit API
+    and defining its own symbol, and the installer drops the right DLL next to the
+    right Revit version. The Revit API assemblies come from the Nice3point reference
+    packages so the project builds even on a machine that only has one Revit installed.
+  -->
+
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">R24</Configuration>
+    <Configurations>R22;R23;R24;R25;R26</Configurations>
+
+    <AssemblyName>ClashNavigator</AssemblyName>
+    <RootNamespace>ClashNavigator</RootNamespace>
+    <OutputType>Library</OutputType>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <PlatformTarget>x64</PlatformTarget>
+
+    <!-- Keep the output at bin\R24\ instead of bin\R24\net48\ so the installer paths stay readable -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+
+    <Version>1.0.0</Version>
+    <Product>Clash Navigator</Product>
+    <Authors>Mohamed Yasser</Authors>
+    <Company>KAITECH - BIM Application Development R11</Company>
+    <Description>Reads a Navisworks clash report and navigates the clashes inside Revit.</Description>
+    <Copyright>Copyright (c) 2026 Mohamed Yasser</Copyright>
+  </PropertyGroup>
+
+  <!-- ===== Target framework per Revit generation ===== -->
+  <PropertyGroup Condition="'$(Configuration)' == 'R22' OR '$(Configuration)' == 'R23' OR '$(Configuration)' == 'R24'">
+    <TargetFramework>net48</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R25' OR '$(Configuration)' == 'R26'">
+    <TargetFramework>net8.0-windows</TargetFramework>
+  </PropertyGroup>
+
+  <!-- ===== Per-version symbols =====
+       R2023_OR_GREATER : linked elements can be selected (Selection.SetReferences)
+       R2024_OR_GREATER : ElementId.Value replaced ElementId.IntegerValue            -->
+  <PropertyGroup Condition="'$(Configuration)' == 'R22'">
+    <DefineConstants>$(DefineConstants);REVIT2022</DefineConstants>
+    <RevitYear>2022</RevitYear>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R23'">
+    <DefineConstants>$(DefineConstants);REVIT2023;R2023_OR_GREATER</DefineConstants>
+    <RevitYear>2023</RevitYear>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R24'">
+    <DefineConstants>$(DefineConstants);REVIT2024;R2023_OR_GREATER;R2024_OR_GREATER</DefineConstants>
+    <RevitYear>2024</RevitYear>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R25'">
+    <DefineConstants>$(DefineConstants);REVIT2025;R2023_OR_GREATER;R2024_OR_GREATER</DefineConstants>
+    <RevitYear>2025</RevitYear>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R26'">
+    <DefineConstants>$(DefineConstants);REVIT2026;R2023_OR_GREATER;R2024_OR_GREATER</DefineConstants>
+    <RevitYear>2026</RevitYear>
+  </PropertyGroup>
+
+  <!-- ===== Revit API references =====
+       ExcludeAssets=runtime keeps RevitAPI.dll out of our output folder. Revit already has
+       it loaded in the process - shipping a second copy is the classic way to break an add-in. -->
+  <ItemGroup>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitYear).*" ExcludeAssets="runtime" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitYear).*" ExcludeAssets="runtime" />
+  </ItemGroup>
+
+  <!-- Needed for the ribbon button icons (BitmapImage lives in these two) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Reference Include="PresentationCore" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="System.Xaml" />
+  </ItemGroup>
+
+  <!-- Icons travel inside the DLL, so the installer only ever copies one file.
+       The Remove line first takes them out of the SDK's default file list, otherwise the
+       same png is claimed by two item types. -->
+  <ItemGroup>
+    <None Remove="Resources\*.png" />
+    <EmbeddedResource Include="Resources\ClashNavigator32.png" />
+    <EmbeddedResource Include="Resources\ClashNavigator16.png" />
+  </ItemGroup>
+
+  <!--
+    While developing on Revit 2024 only: after every build, drop the DLL and the manifest
+    straight into the current user's add-ins folder. No manual copying, no admin rights.
+    Delete those two files before testing the real installer, otherwise the tool loads twice.
+  -->
+  <Target Name="CopyToRevitAddins" AfterTargets="Build" Condition="'$(Configuration)' == 'R24'">
+    <PropertyGroup>
+      <DevAddinsFolder>$(AppData)\Autodesk\Revit\Addins\2024\</DevAddinsFolder>
+    </PropertyGroup>
+    <MakeDir Directories="$(DevAddinsFolder)ClashNavigator" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(DevAddinsFolder)ClashNavigator" ContinueOnError="true" />
+    <Copy SourceFiles="Installer\ClashNavigator.addin" DestinationFolder="$(DevAddinsFolder)" ContinueOnError="true" />
+    <Message Importance="high" Text="ClashNavigator copied to $(DevAddinsFolder)" />
+  </Target>
+
+</Project>
