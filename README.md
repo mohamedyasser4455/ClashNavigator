@@ -4,7 +4,7 @@
 
 [![Revit](https://img.shields.io/badge/Revit-2022%20%7C%202023%20%7C%202024%20%7C%202025%20%7C%202026-0696D7)](#supported-versions)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Download](https://img.shields.io/badge/Download-Latest%20Release-success)](../../releases/latest)
+[![Download](https://img.shields.io/badge/Download-Installer-success)](https://github.com/mohamedyasser4455/ClashNavigator/raw/main/dist/ClashNavigator-Setup.exe)
 
 Navisworks finds the clashes. Revit is where you fix them. Nothing connects the two.
 
@@ -43,7 +43,7 @@ ClashNavigator turns that into one click, and keeps the review decisions.
 
 ### Option 1 — the installer (recommended)
 
-1. Download `ClashNavigator-Setup.exe` from the [latest release](../../releases/latest).
+1. **[Download ClashNavigator-Setup.exe](https://github.com/mohamedyasser4455/ClashNavigator/raw/main/dist/ClashNavigator-Setup.exe)**
 2. Run it. It detects which Revit versions are on your machine and registers the add-in only for those.
 3. Restart Revit. You will find a **ClashNavigator** tab on the ribbon.
 
@@ -51,7 +51,7 @@ ClashNavigator turns that into one click, and keeps the review decisions.
 
 ### Option 2 — manual install
 
-1. Download `ClashNavigator-Manual-Install.zip` from the [latest release](../../releases/latest).
+1. **[Download ClashNavigator-Manual-Install.zip](https://github.com/mohamedyasser4455/ClashNavigator/raw/main/dist/ClashNavigator-Manual-Install.zip)**
 2. Copy the files for your Revit version into:
    ```
    C:\ProgramData\Autodesk\Revit\Addins\<year>\
